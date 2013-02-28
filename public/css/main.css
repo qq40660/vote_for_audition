@@ -1,0 +1,16 @@
+.fn{*zoom:1;position:relative;overflow:hidden;float:left;height:28px;padding:1px;line-height:28px;line-height:29px;}
+ .fn *{line-height:28px;line-height:29px;cursor:pointer;}
+ .fn a,
+ .fn span{float:left;display:block;height:28px;padding:0 7px;}
+ .fn label{float:left;position:relative;color:#909090;margin-right:2px;}
+ .fn em.stat{float:left;font-style:normal;font-size:12px;color:#555;}
+ .fn span.playstat{padding-right:0;}
+ .fn strong.stat{position:relative;float:left;font-size:18px;color:#808080;*top:-1px;}
+ .fn em.short{font-size:12px;font-style:normal;font-weight:normal;color:#909090;margin-left:2px;position:relative;top:-2px;}
+ .fn .return,
+ .fn .return *,
+ .fn .return em.stat{color:#909090;}
+ .fn2nd{float:left;padding:0 1px;height:28px;margin:0 -1px;overflow:hidden;padding:0;margin:0;}
+ .fn_user .name { float:left;height:28px;padding:1px; margin-right:2px; }
+ .fn_user .avatar {}
+ .fn_user .logout {}

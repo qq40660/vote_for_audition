@@ -1,0 +1,74 @@
+<!doctype html>
+  <head>
+    <script src="{{ static_url('js/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ static_url('js/socket.io.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ static_url('css/main.css') }}" type="text/css" />
+    <script type="text/javascript">
+    $(function() {
+        var vote = new io.connect('http://' + window.location.host);
+
+        vote.on('disconnect', function() {
+            vote.socket.reconnect();
+        });
+
+        vote.on('connect', function() {
+          function Vote()
+          {
+              vote.emit('vote', 'c', function(data) {
+
+                $('.fn #upTimes').html(data[0]);
+                $('.fn #downTimes').html(data[1]);
+
+                setTimeout(Vote, 100);
+              });
+          }
+          Vote();
+        });
+    });
+</script>
+    <script type="text/javascript">
+    $.ajaxSetup({
+    beforeSend: function(jqXHR, settings) {
+        type = settings.type
+        if (type != 'GET' && type != 'HEAD' && type != 'OPTIONS') {
+            var pattern = /(.+; *)?_xsrf *= *([^;" ]+)/;
+            var xsrf = pattern.exec(document.cookie);
+            if (xsrf) {
+                jqXHR.setRequestHeader('X-Xsrftoken', xsrf[2]);
+            }
+        }
+}});
+    var flag =1;
+    var vote = function() {
+      if (flag) {
+      var d = arguments[0] ? 0 : 1;  
+        $.post("/vote",  {"vote": d},  function(data){ 
+          flag = 0;
+          alert(data);
+    }); 
+      }
+      else {alert("您已经投过票了!")}
+                };
+    </script>
+    <style>
+  .fn a:hover{position:relative;background:#e3e6e8 url('{{ static_url("img/bg_fn.png") }}') repeat-x 0 -30px;border:1px solid #c9c9c9;border-width:0 1px;margin:0 -1px;text-decoration:none;}
+  .fn .ico_up{float:left;position:relative;top:0px;display:inline-block;*display:inline;*zoom:1;width:24px;height:24px;background:url('{{ static_url("img/bg_fn.png") }}') no-repeat 0 -60px;margin-right:2px;}
+   .fn .ico_down{float:left;position:relative;top:4px;display:inline-block;*display:inline;*zoom:1;width:24px;height:24px;background:url('{{ static_url("img/bg_fn.png") }}') no-repeat 0 -90px;margin-right:2px;}
+   .center {position:absolute; top:50%;left:50%;}
+
+    </style>
+  </head>
+  <body>
+    <div class="fn_user">
+      <span class="name">{{ name }}</span>
+      <img class="avatar" src={{ img }} />
+      <a href="/auth/logout" class="logout">Log out</a>
+    </div>
+    <div class="center">
+      {% module xsrf_form_html() %}
+    <div class="fn" id="fn_updown">
+      <div class="fn2nd" id="fn_up"><a onclick="vote()" href="javascript:void(0);" title="顶"><em class="ico_up"></em><em class="stat" id="upTimes"></em></a></div>
+      <div class="fn2nd" id="fn_down"><a onclick="vote(1)" href="javascript:void(0)" title="踩"><em class="ico_down"></em><em class="stat" id="downTimes"></em></a></div></div>
+    </div>
+  </body>
+</html>
