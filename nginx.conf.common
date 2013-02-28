@@ -57,12 +57,12 @@ http {
 		error_log /var/log/nginx/localhost.error_log info;
 location / {
             proxy_pass_header Server;
-	                proxy_set_header Host $http_host;
-			            proxy_redirect false;
-				                proxy_set_header X-Real-IP $remote_addr;
-						            proxy_set_header X-Scheme $scheme;
-							    proxy_pass http://frontends;
-	}						        
+            proxy_set_header Host $http_host;
+            proxy_redirect false;
+            proxy_set_header X-Real-IP $remote_addr;
+	       proxy_set_header X-Scheme $scheme;
+		  proxy_pass http://frontends;
+}						        
 location /test {
          proxy_pass http://frontends;  
 	 #proxy_set_header Host $http_host;
@@ -76,19 +76,4 @@ location /test {
 		root /var/www/localhost/htdocs;
 
 	}
-
-	# SSL example
-	#server {
-	#	listen 127.0.0.1:443;
-	#	server_name test.com;
-
-	#	ssl on;
-	#	ssl_certificate /etc/ssl/nginx/nginx.pem;
-	#	ssl_certificate_key /etc/ssl/nginx/nginx.key;
-
-	#	access_log /var/log/nginx/localhost.ssl_access_log main;
-	#	error_log /var/log/nginx/localhost.ssl_error_log info;
-
-	#	root /var/www/localhost/htdocs;
-	#}
 }
