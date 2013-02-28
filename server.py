@@ -11,7 +11,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado.gen
-import redis
+#import redis
 from os import path as op
 
 from tornadio2 import SocketConnection, TornadioRouter, SocketServer, event
@@ -159,7 +159,7 @@ class Application(tornado.web.Application):
                             dict(enabled_protocols=['websocket', 'xhr-polling',
                                                     'jsonp-polling', 'htmlfile']))
         tornado.web.Application.__init__(self, VoteRouter.apply_routes(handlers), **settings)
-        self.redis = redis.StrictRedis()
+        #self.redis = redis.StrictRedis()
         self.adb = opermongo.asyncdb(database='test')
         self.db = opermongo.db(database='test')
 
